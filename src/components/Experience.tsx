@@ -1,0 +1,114 @@
+import { Reveal } from '@/components/Reveal'
+
+const CERTIFICATIONS = [
+  { icon: '🏆', label: 'Technology Guild Guru (Highest Level)' },
+  { icon: '🔗', label: 'Deloitte Blockchain Architect' },
+  { icon: '🔗', label: 'Deloitte Blockchain Practitioner' },
+  { icon: '📜', label: 'Hyperledger Apprentice Badge' },
+  { icon: '⚡', label: 'DAML Smart Contract Certification' },
+]
+
+export function Experience() {
+  return (
+    <section id="experience" className="border-t border-border py-24">
+      <div className="container mx-auto max-w-5xl px-6">
+        <Reveal>
+          <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+            Professional Experience
+          </h2>
+        </Reveal>
+
+        <div className="mt-10 space-y-12">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <h3 className="text-lg font-medium">NS Engineering</h3>
+                <span className="text-sm text-muted-foreground">Kathmandu, Nepal</span>
+              </div>
+              {/* TODO(chance): confirm founding/start date */}
+              <span className="text-sm text-muted-foreground">Present</span>
+            </div>
+            <h4 className="mt-1 text-base text-muted-foreground">Founder & Operator</h4>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+              <li>
+                Founded and built the company's entire technical operating stack from the
+                ground up — infrastructure, applications, and architecture
+              </li>
+              <li>
+                Designed and deployed the identity and access backbone: directory services,
+                single sign-on, and an encrypted network mesh connecting every internal system
+              </li>
+              <li>
+                Built a self-hosted internal platform suite covering team communication,
+                company email, and real-time document collaboration, unified under one
+                identity system
+              </li>
+              <li>
+                Developed a custom enterprise application on an ERP platform to run lab
+                operations, project tracking, and organization-wide goal/task management
+              </li>
+              <li>
+                Digitized the company's quality management system to align lab operations with
+                ISO/IEC 17025 international standards
+              </li>
+              <li>
+                Shifted the department from reactive, ad hoc support to a governance-driven IT
+                function — formal engagement agreements, budgeting, and a training model
+              </li>
+            </ul>
+          </Reveal>
+
+          <Reveal delay={0.05}>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <h3 className="text-lg font-medium">Deloitte</h3>
+                <span className="text-sm text-muted-foreground">Delhi, India</span>
+              </div>
+              {/* TODO(chance): confirm exact tenure end date */}
+              <span className="text-sm text-muted-foreground">2018 – 2025</span>
+            </div>
+            <h4 className="mt-1 text-base text-muted-foreground">
+              Lead Developer & Technology Guild Guru
+            </h4>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
+              <li>
+                Led development of a 17-microservice platform on Kubernetes, achieving 99.9%
+                system uptime
+              </li>
+              <li>
+                Earned Technology Guild Guru certification — the highest level of blockchain
+                expertise at Deloitte
+              </li>
+              <li>Built enterprise RAG systems and AI-powered document automation solutions</li>
+              <li>
+                Mentored 50+ practitioners in emerging technologies including blockchain and
+                AI/ML
+              </li>
+              <li>
+                Architected blockchain solutions for supply chain transparency using
+                Hyperledger and DAML
+              </li>
+            </ul>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.1} className="mt-16">
+          <h3 className="text-sm font-medium text-muted-foreground">
+            Certifications & Achievements
+          </h3>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {CERTIFICATIONS.map((cert) => (
+              <div
+                key={cert.label}
+                className="flex items-center gap-3 rounded-lg border border-border px-4 py-3 text-sm"
+              >
+                <span aria-hidden="true">{cert.icon}</span>
+                <span>{cert.label}</span>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
