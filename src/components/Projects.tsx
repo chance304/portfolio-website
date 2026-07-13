@@ -1,3 +1,4 @@
+import { CheckCircle2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Reveal } from '@/components/Reveal'
@@ -102,7 +103,10 @@ export function Projects() {
                   </div>
                   <ul className="space-y-1.5 text-sm text-muted-foreground">
                     {project.achievements.map((a) => (
-                      <li key={a}>✅ {a}</li>
+                      <li key={a} className="flex items-start gap-2">
+                        <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                        <span>{a}</span>
+                      </li>
                     ))}
                   </ul>
                 </CardContent>

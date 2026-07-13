@@ -1,11 +1,12 @@
+import { Award, Link2, ScrollText, Zap } from 'lucide-react'
 import { Reveal } from '@/components/Reveal'
 
 const CERTIFICATIONS = [
-  { icon: '🏆', label: 'Technology Guild Guru (Highest Level)' },
-  { icon: '🔗', label: 'Deloitte Blockchain Architect' },
-  { icon: '🔗', label: 'Deloitte Blockchain Practitioner' },
-  { icon: '📜', label: 'Hyperledger Apprentice Badge' },
-  { icon: '⚡', label: 'DAML Smart Contract Certification' },
+  { icon: Award, label: 'Technology Guild Guru (Highest Level)' },
+  { icon: Link2, label: 'Deloitte Blockchain Architect' },
+  { icon: Link2, label: 'Deloitte Blockchain Practitioner' },
+  { icon: ScrollText, label: 'Hyperledger Apprentice Badge' },
+  { icon: Zap, label: 'DAML Smart Contract Certification' },
 ]
 
 export function Experience() {
@@ -102,7 +103,7 @@ export function Experience() {
                 key={cert.label}
                 className="flex items-center gap-3 rounded-lg border border-border px-4 py-3 text-sm"
               >
-                <span aria-hidden="true">{cert.icon}</span>
+                <cert.icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                 <span>{cert.label}</span>
               </div>
             ))}

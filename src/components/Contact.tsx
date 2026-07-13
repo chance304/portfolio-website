@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
+import { MapPin, Globe, Wrench } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -70,15 +71,15 @@ export function Contact() {
             </p>
             <div className="mt-6 space-y-3 text-sm">
               <div className="flex items-center gap-3">
-                <span aria-hidden="true">📍</span>
+                <MapPin className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                 <span>Kathmandu, Nepal</span>
               </div>
               <div className="flex items-center gap-3">
-                <span aria-hidden="true">🌐</span>
+                <Globe className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                 <span>shobhittripathi.com</span>
               </div>
               <div className="flex items-center gap-3">
-                <span aria-hidden="true">🛠️</span>
+                <Wrench className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
                 <span>Builder & Founder, NS Engineering</span>
               </div>
             </div>
