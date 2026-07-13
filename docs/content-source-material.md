@@ -65,10 +65,14 @@ Raw material gathered from Jarvis (personal knowledge base) and the NS Engineeri
 - Explicitly research-driven: doesn't take secondary-source claims at face value — multiple documented cases of checking a claim against primary docs/live systems and finding the popular claim wrong (e.g. OnlyOffice's real service topology, MailChannels' free-tier status).
 - Comfortable owning mistakes and re-reviewing his own work critically (e.g., catching his own reused SSH key, re-reviewing his own PR and finding a real gap in it).
 
-## Open questions for the content discussion (not decided — need you)
+## Content decisions (locked, 2026-07-13)
 
-1. **Positioning**: lead with "Founder & Operator, NS Engineering" or lead with the broader "systems builder across infra/ERP/AI/product" story? These read differently (founder/operator vs. hands-on technical builder).
-2. **Confidentiality**: a lot of the NS Engineering detail above is internal infrastructure (AD/Keycloak specifics, security fixes, real bug counts). Fine to describe in outline ("built and hardened the identity/SSO backbone") vs. specifics that might be too much detail for a public site — your call on where the line is.
-3. **Deloitte's place**: still worth keeping as credibility/background (7 years, Technology Guild Guru), or minimize it now that NS Engineering is the real story?
-4. **Which of the 6 categories above are "hero" content** (2–4 flagship case studies) vs. a shorter skills/experience list?
-5. **Social links** (LinkedIn/GitHub/email) are currently dead placeholders — need the real URLs before this ships.
+1. **Positioning**: lead with **builder first, founder second** — hands-on technical builder is the primary identity; "founder/operator of NS Engineering" is context, not the headline.
+2. **No product names**: Engineering Bazar, Orbit, and Jarvis are **excluded entirely** — don't name them, don't describe them even by circumlocution as identifiable projects. Where their underlying work is worth showing, describe it purely by **stack/capability**, genericized (e.g. "a React 19 + TypeScript + Tailwind marketplace platform for verified professionals," "a rule-based conversational engine," "a persistent AI knowledge system for continuity across sessions") with no project name attached.
+3. **Deloitte stays prominent** — do not minimize it. Keep it as a real, visible part of the experience narrative (7+ years, Technology Guild Guru, blockchain work), alongside the NS Engineering builder story, not overshadowed by it.
+
+## Still open (not yet decided — need you)
+
+1. **Confidentiality depth**: how much NS Engineering infra detail is fine at outline level ("built and hardened the identity/SSO backbone") vs. too specific for a public site (real bug counts, exact security-fix mechanics) — your call on where the line is.
+2. **Hero content**: given eng bazar/orbit/jarvis are now out, which of the remaining categories (identity/infra, self-hosted collaboration suite, eng_lab_suite/ERP, governance work, personal ventures, Deloitte/blockchain) become the 2–4 flagship case studies vs. a shorter skills/experience list.
+3. **Social links** (LinkedIn/GitHub/email) are currently dead placeholders — need the real URLs before this ships.
