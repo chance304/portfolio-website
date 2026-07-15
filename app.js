@@ -514,8 +514,8 @@ Built with modern web technologies
 
 Connect with Shobhit:
 • Website: www.shobhittripathi.com
-• Location: Delhi, India
-• Role: Lead Developer at Deloitte
+• Location: Kathmandu, Nepal
+• Role: IT Director at NS Engineering (ex-Deloitte)
     `);
 });
 
