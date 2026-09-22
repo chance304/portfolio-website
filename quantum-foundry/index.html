@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Foundry · Shobhit Tripathi</title>
+<meta name="description" content="Quantum Foundry is an open-source, multi-physics simulator for post-silicon and 3D-stacked semiconductor devices. It ranks 2D materials and stacking choices on performance, heat and manufacturability together, and never reports a number a solver didn't produce.">
+<meta property="og:title" content="Quantum Foundry: an honest simulator for post-silicon devices">
+<meta property="og:description" content="Open-source multi-physics simulator for 2D-material and 3D-stacked transistors. Apache-2.0.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://shobhittripathi.com/quantum-foundry/">
+<link rel="canonical" href="https://shobhittripathi.com/quantum-foundry/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+  // Same theme key as the main site, so the choice carries across pages.
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<style>
+  :root {
+    --bg: oklch(1 0 0);
+    --fg: oklch(0.145 0 0);
+    --muted: oklch(0.556 0 0);
+    --subtle: oklch(0.97 0 0);
+    --border: oklch(0.922 0 0);
+    --card: oklch(1 0 0);
+    --accent: oklch(0.52 0.13 250);
+    --ok: oklch(0.55 0.13 155);
+    --warn: oklch(0.62 0.14 70);
+    --radius: 10px;
+  }
+  :root[data-theme="dark"] {
+    --bg: oklch(0.145 0 0);
+    --fg: oklch(0.985 0 0);
+    --muted: oklch(0.708 0 0);
+    --subtle: oklch(0.205 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --card: oklch(0.205 0 0);
+    --accent: oklch(0.72 0.12 250);
+    --ok: oklch(0.72 0.14 155);
+    --warn: oklch(0.78 0.13 75);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 'Geist', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+  a:hover { text-decoration-color: var(--fg); }
+  code { font: 0.88em 'Geist Mono', ui-monospace, monospace; background: var(--subtle); padding: 0.1em 0.35em; border-radius: 5px; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 640px) { .wrap { padding: 0 24px; } }
+  header.top { border-bottom: 1px solid var(--border); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  header.top a { text-decoration: none; font-weight: 500; }
+  .theme-btn {
+    border: 1px solid var(--border); background: transparent; color: var(--fg);
+    border-radius: 8px; height: 34px; padding: 0 12px; font: inherit; font-size: 14px; cursor: pointer;
+  }
+  .hero { padding-top: 72px; padding-bottom: 40px; }
+  .eyebrow { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.01em; }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1.08; letter-spacing: -0.03em; font-weight: 600; margin: 10px 0 18px; }
+  .lede { font-size: 1.15rem; color: var(--muted); max-width: 42rem; margin: 0; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px;
+    border-radius: 9px; font-weight: 500; font-size: 15px; text-decoration: none;
+    border: 1px solid var(--border);
+  }
+  .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .pill { font-size: 13px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+  section { border-top: 1px solid var(--border); padding: 56px 0; }
+  h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; font-weight: 600; margin: 0 0 14px; }
+  h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 6px; }
+  p { margin: 0 0 14px; }
+  .muted { color: var(--muted); }
+  .prose { max-width: 44rem; }
+  .rule {
+    border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius);
+    padding: 18px 20px; background: var(--subtle); max-width: 44rem;
+  }
+  .rule strong { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+  .grid { display: grid; gap: 16px; }
+  @media (min-width: 720px) { .grid.two { grid-template-columns: 1fr 1fr; } .grid.three { grid-template-columns: 1fr 1fr 1fr; } }
+  .card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); padding: 20px; }
+  .card p:last-child { margin-bottom: 0; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 500; border-radius: 6px; padding: 1px 8px; margin-bottom: 10px; }
+  .tag.real { color: var(--ok); background: color-mix(in oklch, var(--ok) 14%, transparent); }
+  .tag.stub { color: var(--warn); background: color-mix(in oklch, var(--warn) 16%, transparent); }
+  .tag.plan { color: var(--muted); background: var(--subtle); }
+  figure { margin: 8px 0 0; }
+  .diagram { width: 100%; height: auto; display: block; }
+  .diagram text { font-family: 'Geist', system-ui, sans-serif; fill: var(--fg); }
+  .diagram .sub { fill: var(--muted); font-size: 12px; }
+  .diagram .box { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+  .diagram .box.hl { stroke: var(--accent); }
+  .diagram .arrow { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+  .diagram .arrowhead { fill: var(--muted); }
+  figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
+  .diagram-mobile { display: block; }
+  .diagram-desktop { display: none; }
+  @media (min-width: 720px) { .diagram-mobile { display: none; } .diagram-desktop { display: block; } }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-weight: 500; color: var(--muted); font-size: 13px; }
+  .table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
+  .table-wrap tr:last-child td { border-bottom: 0; }
+  .num { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.92em; }
+  .story { border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; background: var(--card); }
+  .story .what { font-size: 13px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .big { font-size: 2.2rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin: 6px 0 10px; }
+  pre { font: 14px/1.6 'Geist Mono', ui-monospace, monospace; background: var(--subtle); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow-x: auto; margin: 0; }
+  footer { border-top: 1px solid var(--border); padding: 32px 0 48px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="/">← Shobhit Tripathi</a>
+    <button class="theme-btn" type="button" id="theme-toggle" aria-label="Toggle dark mode">Theme</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="eyebrow">Open-source project · 2026</div>
+    <h1>Quantum Foundry</h1>
+    <p class="lede">A multi-physics simulator for post-silicon and 3D-stacked transistors. It ranks 2D channel materials, device geometries and stacking choices on speed, heat and <em>manufacturability</em> together, before anything goes near a fab.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://github.com/chance304/quantum-foundry">View on GitHub</a>
+      <a class="btn" href="#honesty">How it stays honest</a>
+    </div>
+    <div class="meta">
+      <span class="pill">Python 3.11</span>
+      <span class="pill">Apache-2.0</span>
+      <span class="pill">Kwant · HotSpot · gmsh · DEVSIM</span>
+      <span class="pill">10 cited materials</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap"><div class="prose">
+      <h2>The problem</h2>
+      <p>Silicon transistors are running out of room to shrink. The leading replacements are atomically thin "2D" semiconductors such as MoS₂ and WSe₂, stacked in new geometries: gate-all-around nanosheets, CFETs that stack the n- and p-type transistors on top of each other, and fully monolithic 3D chips.</p>
+      <p>In June 2026 imec, ASML and TSMC demonstrated 2D-material CMOS on 300 mm wafers. It confirmed an awkward fact: MoS₂ makes the best n-type channel and WSe₂/WS₂ the best p-type, and no single material does both well. So the useful question isn't "which material is fastest?" It's "which <em>combination</em> of materials, dielectrics and stacking is fast enough, stays cool enough, and can actually be manufactured?"</p>
+      <p class="muted">Answering that means joining physics that usually lives in separate, expensive tools. Quantum Foundry joins it in one open pipeline.</p>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="prose muted">Five stages, each behind a common interface with two interchangeable backends: a fast "stub" for exploring, and a real physics solver for answers. Switching between them is a config change, not a code change.</p>
+      <figure>
+        <svg class="diagram diagram-desktop" viewBox="0 0 1000 200" role="img" aria-labelledby="pipe-title">
+          <title id="pipe-title">Pipeline: materials database, then ab-initio, device transport, thermal, and yield stages, feeding a Pareto search</title>
+          <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <g>
+            <rect class="box hl" x="4" y="40" width="150" height="92" rx="10"/>
+            <text x="79" y="78" text-anchor="middle" font-weight="600" font-size="15">Materials</text>
+            <text class="sub" x="79" y="98" text-anchor="middle">cited database</text>
+            <text class="sub" x="79" y="114" text-anchor="middle">JARVIS · C2DB · MP</text>
+          </g>
+          <path class="arrow" d="M156,86 L186,86" marker-end="url(#ah)"/>
+          <g>
+            <rect class="box" x="190" y="40" width="150" height="92" rx="10"/>
+            <text x="265" y="78" text-anchor="middle" font-weight="600" font-size="15">Ab-initio</text>
+            <text class="sub" x="265" y="98" text-anchor="middle">band structure</text>
+            <text class="sub" x="265" y="114" text-anchor="middle">QE + Wannier90</text>
+          </g>
+          <path class="arrow" d="M342,86 L372,86" marker-end="url(#ah)"/>
+          <g>
+            <rect class="box" x="376" y="40" width="150" height="92" rx="10"/>
+            <text x="451" y="78" text-anchor="middle" font-weight="600" font-size="15">Transport</text>
+            <text class="sub" x="451" y="98" text-anchor="middle">current, switching</text>
+            <text class="sub" x="451" y="114" text-anchor="middle">Kwant NEGF · DEVSIM</text>
+          </g>
+          <path class="arrow" d="M528,86 L558,86" marker-end="url(#ah)"/>
+          <g>
+            <rect class="box" x="562" y="40" width="150" height="92" rx="10"/>
+            <text x="637" y="78" text-anchor="middle" font-weight="600" font-size="15">Thermal</text>
+            <text class="sub" x="637" y="98" text-anchor="middle">junction temperature</text>
+            <text class="sub" x="637" y="114" text-anchor="middle">HotSpot · FEniCSx</text>
+          </g>
+          <path class="arrow" d="M714,86 L744,86" marker-end="url(#ah)"/>
+          <g>
+            <rect class="box" x="748" y="40" width="150" height="92" rx="10"/>
+            <text x="823" y="78" text-anchor="middle" font-weight="600" font-size="15">Yield</text>
+            <text class="sub" x="823" y="98" text-anchor="middle">can it be made?</text>
+            <text class="sub" x="823" y="114" text-anchor="middle">Monte Carlo · Murphy</text>
+          </g>
+          <path class="arrow" d="M900,86 L930,86" marker-end="url(#ah)"/>
+          <g>
+            <rect class="box hl" x="934" y="40" width="62" height="92" rx="10"/>
+            <text x="965" y="84" text-anchor="middle" font-weight="600" font-size="14">Pareto</text>
+            <text class="sub" x="965" y="102" text-anchor="middle">rank</text>
+          </g>
+          <text class="sub" x="500" y="176" text-anchor="middle">Every stage returns its result with provenance: which backend ran, and whether it was a stub.</text>
+        </svg>
+        <svg class="diagram diagram-mobile" viewBox="0 0 320 470" role="img" aria-labelledby="pipe-title-m">
+          <title id="pipe-title-m">Pipeline: materials, ab-initio, transport, thermal, yield, Pareto ranking</title>
+          <defs><marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+          <rect class="box hl" x="10" y="4" width="300" height="56" rx="10"/><text x="26" y="29" font-weight="600" font-size="15">Materials</text><text class="sub" x="26" y="47">cited database · JARVIS · C2DB · MP</text>
+          <path class="arrow" d="M160,62 L160,78" marker-end="url(#ahm)"/>
+          <rect class="box" x="10" y="82" width="300" height="56" rx="10"/><text x="26" y="107" font-weight="600" font-size="15">Ab-initio</text><text class="sub" x="26" y="125">band structure · QE + Wannier90</text>
+          <path class="arrow" d="M160,140 L160,156" marker-end="url(#ahm)"/>
+          <rect class="box" x="10" y="160" width="300" height="56" rx="10"/><text x="26" y="185" font-weight="600" font-size="15">Transport</text><text class="sub" x="26" y="203">current, switching · Kwant · DEVSIM</text>
+          <path class="arrow" d="M160,218 L160,234" marker-end="url(#ahm)"/>
+          <rect class="box" x="10" y="238" width="300" height="56" rx="10"/><text x="26" y="263" font-weight="600" font-size="15">Thermal</text><text class="sub" x="26" y="281">junction temperature · HotSpot</text>
+          <path class="arrow" d="M160,296 L160,312" marker-end="url(#ahm)"/>
+          <rect class="box" x="10" y="316" width="300" height="56" rx="10"/><text x="26" y="341" font-weight="600" font-size="15">Yield</text><text class="sub" x="26" y="359">can it be made? · Monte Carlo</text>
+          <path class="arrow" d="M160,374 L160,390" marker-end="url(#ahm)"/>
+          <rect class="box hl" x="10" y="394" width="300" height="56" rx="10"/><text x="26" y="419" font-weight="600" font-size="15">Pareto ranking</text><text class="sub" x="26" y="437">trade-offs, not a single "winner"</text>
+        </svg>
+        <figcaption>The pipeline. Stages marked with a solver name run that solver for real; the rest use a clearly labelled stub until the solver is wired in.</figcaption>
+      </figure>
+
+      <div class="grid three" style="margin-top:28px">
+        <div class="card">
+          <h3>Why these tools</h3>
+          <p class="muted">Kwant for atomistic quantum transport, DEVSIM for classic drift-diffusion, HotSpot as a fast thermal pre-filter before full 3D FEA. All open source, so every result can be reproduced.</p>
+        </div>
+        <div class="card">
+          <h3>Manufacturability is built in</h3>
+          <p class="muted">No mature open-source yield tool exists, so yield is modelled directly with Monte Carlo and Poisson/Murphy models. Every candidate is checked against back-end-of-line thermal budgets.</p>
+        </div>
+        <div class="card">
+          <h3>Stacked devices, for real</h3>
+          <p class="muted">CFET, GAA and monolithic-3D devices run per-tier, with multi-tier heat flow including the thermal resistance at each bonded interface.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="honesty">
+    <div class="wrap">
+      <h2>The rule: never report a number a solver didn't produce</h2>
+      <div class="rule">
+        <strong>Every result carries its provenance.</strong>
+        <span class="muted">Each stage's output says which backend produced it and whether it was a stub. Every material property that isn't computed cites a named paper or database. A material with missing data is refused, never filled in with a plausible guess.</span>
+      </div>
+      <p class="prose muted" style="margin-top:22px">That rule caught real mistakes. Three of them:</p>
+
+      <div class="grid three">
+        <div class="story">
+          <div class="what">Units bug</div>
+          <div class="big">5× too cool</div>
+          <p class="muted">Power density was normalised by the wrong device dimension, which scaled total power by L/W. For the default 20 × 100 nm device, every junction temperature, including real HotSpot runs, was fed a fifth of the real power. Caught by checking the formula's units, then fixed in both thermal backends.</p>
+        </div>
+        <div class="story">
+          <div class="what">Measurement artifact</div>
+          <div class="big">"DIBL" that wasn't</div>
+          <p class="muted">A drain-induced barrier lowering value looked like real short-channel physics. Reading the model showed its potential has no drain-voltage dependence, so the number was a by-product of the method. It is now flagged in every output instead of being shown as physics.</p>
+        </div>
+        <div class="story">
+          <div class="what">Citation drift</div>
+          <div class="big">34.5 → 24 ± 4</div>
+          <p class="muted">MoS₂'s thermal conductivity was seeded as 34.5 W/m·K, "from Yan et al. 2014". The paper's own abstract says 24 ± 4 W/m·K. The higher number circulates in later papers that cite it. The value was corrected to the source.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>What it says today</h2>
+      <div class="grid two">
+        <div class="prose">
+          <p>The n/p channel search runs every seeded 2D material in <em>both</em> roles instead of assuming MoS₂ is n-type and WSe₂ is p-type. On the current physics, MoS₂, WSe₂, WS₂, MoTe₂ and WTe₂ all land on the Pareto front for both roles. That's a genuine trade-off, so the tool declines to name a single winner.</p>
+          <p>Graphene and black phosphorus are excluded, with the reason printed: their effective masses aren't in the cited data yet. Leaving them out openly is the correct behaviour.</p>
+          <p class="muted">These rankings come from stub-level transport and thermal models, labelled as such. They show that the search machinery works, not what the final answer is.</p>
+        </div>
+        <pre aria-label="Real CLI output, abridged">$ qf heterostructure-search
+NOTE: Tj values below come from thermal/stub.py's
+lumped-RC model, not the real HotSpot backend …
+
+=== n-type role ===
+  MoS2_monolayer: Ion=240 uA/um  … [pareto-front]
+  WSe2_monolayer: Ion=437 uA/um  … [pareto-front]
+  WS2_monolayer:  Ion=471 uA/um  … [pareto-front]
+  MoTe2_monolayer: Ion=259 uA/um … [pareto-front]
+  WTe2_monolayer: Ion=272 uA/um  … [pareto-front]
+  black_phosphorus_monolayer: EXCLUDED — …
+    refusing to fabricate.
+  graphene_monolayer: EXCLUDED — …
+  -> no single recommendation: 5 candidate(s)
+     on the pareto front, a real trade-off
+     rather than a clear winner</pre>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Status</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Layer</th><th>State</th><th>Detail</th></tr></thead>
+          <tbody>
+            <tr><td>Materials database</td><td><span class="tag real">real</span></td><td class="muted">10 cited 2D materials and gate dielectrics</td></tr>
+            <tr><td>Validation</td><td><span class="tag real">real</span></td><td class="muted">6 literature benchmarks, each tied to a specific figure or table</td></tr>
+            <tr><td>Quantum transport</td><td><span class="tag real">real</span></td><td class="muted">Kwant NEGF</td></tr>
+            <tr><td>Drift-diffusion</td><td><span class="tag plan">next</span></td><td class="muted">DEVSIM backend scaffolded; needs a solver environment</td></tr>
+            <tr><td>Thermal</td><td><span class="tag real">real</span></td><td class="muted">HotSpot compact model incl. multi-tier stacks; 3D meshing via gmsh</td></tr>
+            <tr><td>3D FEA</td><td><span class="tag plan">next</span></td><td class="muted">FEniCSx/Elmer on the generated mesh</td></tr>
+            <tr><td>Yield</td><td><span class="tag real">real</span></td><td class="muted">Monte Carlo + Poisson/Murphy/negative-binomial</td></tr>
+            <tr><td>Ab-initio</td><td><span class="tag plan">next</span></td><td class="muted">Quantum ESPRESSO + Wannier90, designed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="prose muted" style="margin-top:16px">The remaining solvers need real compute, and the full parameter sweeps approach HPC scale. That's the next stage of the project, and a good place to contribute.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Try it</h2>
+      <div class="grid two">
+        <pre>pip install -e ".[dev]"
+qf run MoS2_monolayer --backend stub
+qf heterostructure-search --format markdown</pre>
+        <div class="prose">
+          <p>The stub pipeline installs in a minute with no heavy solvers. Real backends install through one conda setup script, and <code>qf preflight</code> reports exactly what's available before any real run.</p>
+          <p>Contributions are welcome, especially <strong>cited materials data</strong>, validation benchmarks and new solver backends. See <a href="https://github.com/chance304/quantum-foundry/blob/main/CONTRIBUTING.md">CONTRIBUTING</a> and the <a href="https://github.com/chance304/quantum-foundry/blob/main/docs/ROADMAP.md">roadmap</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Quantum Foundry · Apache-2.0 · built by <a href="/">Shobhit Tripathi</a></span>
+    <a href="https://github.com/chance304/quantum-foundry">github.com/chance304/quantum-foundry</a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var btn = document.getElementById('theme-toggle');
+    function label() { btn.textContent = document.documentElement.getAttribute('data-theme') === 'dark' ? 'Light' : 'Dark'; }
+    label();
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      label();
+    });
+  })();
+</script>
+</body>
+</html>
