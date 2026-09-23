@@ -6,7 +6,7 @@ Manual steps needed from Chance before the contact form and live hosting actuall
 
 - Cloudflare dashboard → Pages → create project → connect `chance304/portfolio-website`, branch `main` (after this branch merges).
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Build output directory: `out` (Next.js static export)
 - `functions/api/contact.ts` is picked up automatically from the repo root — no extra config needed for that.
 
 ## 2. Contact form — Resend setup

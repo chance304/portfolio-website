@@ -1,4 +1,7 @@
+'use client'
+
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { Menu, Moon, Sun } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
@@ -22,7 +25,11 @@ function scrollToSection(id: string) {
 }
 
 export function Header() {
-  const { theme, toggleTheme } = useTheme()
+  const { toggleTheme } = useTheme()
+  const pathname = usePathname()
+  const onHome = pathname === '/'
+  // Section links scroll in place on the homepage and navigate to it elsewhere.
+  const linkHref = (hash: string) => (onHome ? hash : `/${hash}`)
   const [scrolled, setScrolled] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
 
@@ -33,9 +40,10 @@ export function Header() {
   }, [])
 
   const handleNavClick = (href: string) => (e: React.MouseEvent) => {
+    setSheetOpen(false)
+    if (!onHome) return
     e.preventDefault()
     scrollToSection(href)
-    setSheetOpen(false)
   }
 
   return (
@@ -46,7 +54,7 @@ export function Header() {
     >
       <nav className="container mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         <a
-          href="#home"
+          href={linkHref('#home')}
           onClick={handleNavClick('#home')}
           className="font-semibold tracking-tight"
         >
@@ -57,7 +65,7 @@ export function Header() {
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
-                href={link.href}
+                href={linkHref(link.href)}
                 onClick={handleNavClick(link.href)}
                 className="transition-colors hover:text-foreground"
               >
@@ -74,7 +82,8 @@ export function Header() {
             aria-label="Toggle dark/light theme"
             onClick={toggleTheme}
           >
-            {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+            <Sun className="hidden size-4 dark:block" aria-hidden="true" />
+            <Moon className="size-4 dark:hidden" aria-hidden="true" />
           </Button>
 
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
@@ -87,7 +96,7 @@ export function Header() {
               <ul className="mt-10 flex flex-col gap-6 px-6 text-lg">
                 {NAV_LINKS.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href} onClick={handleNavClick(link.href)}>
+                    <a href={linkHref(link.href)} onClick={handleNavClick(link.href)}>
                       {link.label}
                     </a>
                   </li>

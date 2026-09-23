@@ -1,0 +1,14 @@
+# Shobhit Tripathi
+
+> Engineering leader who builds rigorous, AI-native platforms end to end. CTO / IT Director at NS Engineering; ex-Deloitte (7+ years, Technology Guild Guru); creator of Quantum Foundry, an open-source semiconductor simulator.
+
+## Pages
+
+- [Home](https://shobhittripathi.com/): profile, experience, projects and contact
+- [Quantum Foundry](https://shobhittripathi.com/quantum-foundry/): open-source multi-physics simulator for post-silicon and 3D-stacked transistors; never reports a number a solver didn't produce
+
+## Elsewhere
+
+- [GitHub](https://github.com/chance304)
+- [Quantum Foundry repository](https://github.com/chance304/quantum-foundry)
+- [LinkedIn](https://www.linkedin.com/in/shobhittripathi304/)

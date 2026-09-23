@@ -1,5 +1,8 @@
+'use client'
+
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import mePhoto from '@/assets/me.jpeg'
 
 export function Hero() {
@@ -51,7 +54,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.15, ease: 'easeOut' }}
           className="mx-auto aspect-square w-48 overflow-hidden rounded-2xl border border-border shadow-sm md:w-full"
         >
-          <img src={mePhoto} alt="Shobhit Tripathi" className="h-full w-full object-cover" />
+          <Image src={mePhoto} alt="Shobhit Tripathi" className="h-full w-full object-cover" priority />
         </motion.div>
       </div>
     </section>

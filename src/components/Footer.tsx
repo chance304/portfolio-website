@@ -1,15 +1,15 @@
 const QUICK_LINKS = [
-  { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+  { href: '/#about', label: 'About' },
+  { href: '/#skills', label: 'Skills' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/#contact', label: 'Contact' },
 ]
 
 // Contact goes through the site form, not a published address (ADR-005, #8).
 const SOCIAL_LINKS = [
   { href: 'https://www.linkedin.com/in/shobhittripathi304/', label: 'LinkedIn' },
   { href: 'https://github.com/chance304', label: 'GitHub' },
-  { href: '#contact', label: 'Contact' },
+  { href: '/#contact', label: 'Contact' },
 ]
 
 export function Footer() {
