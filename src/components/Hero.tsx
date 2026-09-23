@@ -16,14 +16,13 @@ export function Hero() {
             Shobhit Tripathi
           </h1>
           <h2 className="mt-4 text-lg text-muted-foreground md:text-xl">
-            Builder & Founder — Enterprise Systems, Infrastructure & AI
+            Engineering leader who builds rigorous, AI-native platforms end to end
           </h2>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground">
-            I build production systems end to end — identity and infrastructure, custom
-            enterprise applications, and AI-native tooling. Currently founder and operator of
-            a geotechnical engineering company in Kathmandu, where I built its entire technical
-            backbone from the ground up. Previously, 7+ years at Deloitte specializing in
-            enterprise architecture and blockchain.
+            CTO / IT Director at NS Engineering, where I designed and run the company's entire
+            technology stack as its sole engineer. Before that, 7+ years at Deloitte, where I
+            earned Technology Guild Guru. I also build Quantum Foundry, an open-source
+            semiconductor simulator.
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <Button

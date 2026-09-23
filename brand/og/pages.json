@@ -1,0 +1,12 @@
+{
+  "home": {
+    "kicker": "shobhittripathi.com",
+    "title": "Shobhit Tripathi",
+    "subtitle": "Engineering leader who builds rigorous, AI-native platforms end to end"
+  },
+  "quantum-foundry": {
+    "kicker": "Open-source project",
+    "title": "Quantum Foundry",
+    "subtitle": "A multi-physics simulator for post-silicon and 3D-stacked transistors that never reports a number a solver didn't produce"
+  }
+}

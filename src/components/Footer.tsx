@@ -5,11 +5,11 @@ const QUICK_LINKS = [
   { href: '#contact', label: 'Contact' },
 ]
 
-// TODO(chance): replace with real profile URLs
+// Contact goes through the site form, not a published address (ADR-005, #8).
 const SOCIAL_LINKS = [
-  { href: '#', label: 'LinkedIn' },
-  { href: '#', label: 'GitHub' },
-  { href: '#', label: 'Email' },
+  { href: 'https://www.linkedin.com/in/shobhittripathi304/', label: 'LinkedIn' },
+  { href: 'https://github.com/chance304', label: 'GitHub' },
+  { href: '#contact', label: 'Contact' },
 ]
 
 export function Footer() {
@@ -20,7 +20,7 @@ export function Footer() {
           <div>
             <h3 className="font-semibold">Shobhit Tripathi</h3>
             <p className="mt-1 text-sm text-muted-foreground">
-              Builder & Founder — Enterprise Systems, Infrastructure & AI
+              Engineering leader who builds rigorous, AI-native platforms end to end
             </p>
           </div>
           <div className="flex gap-16">
