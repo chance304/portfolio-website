@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react'
+import { ArrowRight, CheckCircle2 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Reveal } from '@/components/Reveal'
@@ -9,9 +9,24 @@ type Project = {
   description: string
   tech: string[]
   achievements: string[]
+  link?: { href: string; label: string }
 }
 
 const PROJECTS: Project[] = [
+  {
+    title: 'Quantum Foundry',
+    role: 'Creator · Open Source',
+    description:
+      'An open-source multi-physics simulator for post-silicon and 3D-stacked transistors. It ranks 2D channel materials and stacking choices on performance, heat and manufacturability together, and never reports a number a solver didn\u2019t produce.',
+    tech: ['Python', 'Kwant (NEGF)', 'HotSpot', 'gmsh', 'Monte Carlo yield', 'Apache-2.0'],
+    achievements: [
+      'Five-stage pipeline with swappable stub and real-solver backends',
+      'Cited materials database for 10 2D materials and gate dielectrics',
+      'Multi-tier thermal physics for CFET, GAA and monolithic-3D stacks',
+      'Provenance on every result: which solver ran, and whether it was real',
+    ],
+    link: { href: '/quantum-foundry/', label: 'Read the project write-up' },
+  },
   {
     title: 'Enterprise Identity & Infrastructure Platform',
     role: 'Infrastructure Architect',
@@ -108,6 +123,15 @@ export function Projects() {
                       </li>
                     ))}
                   </ul>
+                  {project.link && (
+                    <a
+                      href={project.link.href}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium underline-offset-4 hover:underline"
+                    >
+                      {project.link.label}
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             </Reveal>
