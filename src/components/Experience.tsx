@@ -26,14 +26,13 @@ export function Experience() {
                 <h3 className="text-lg font-medium">NS Engineering</h3>
                 <span className="text-sm text-muted-foreground">Kathmandu, Nepal</span>
               </div>
-              {/* TODO(chance): confirm founding/start date */}
-              <span className="text-sm text-muted-foreground">Present</span>
+              <span className="text-sm text-muted-foreground">Nov 2025 – Present</span>
             </div>
-            <h4 className="mt-1 text-base text-muted-foreground">Founder & Operator</h4>
+            <h4 className="mt-1 text-base text-muted-foreground">CTO / IT Director</h4>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
               <li>
-                Founded and built the company's entire technical operating stack from the
-                ground up — infrastructure, applications, and architecture
+                Designed and run the company's entire technology stack as its sole engineer —
+                infrastructure, applications, and architecture
               </li>
               <li>
                 Designed and deployed the identity and access backbone: directory services,
@@ -65,16 +64,15 @@ export function Experience() {
                 <h3 className="text-lg font-medium">Deloitte</h3>
                 <span className="text-sm text-muted-foreground">Delhi, India</span>
               </div>
-              {/* TODO(chance): confirm exact tenure end date */}
-              <span className="text-sm text-muted-foreground">2018 – 2025</span>
+              <span className="text-sm text-muted-foreground">Jun 2018 – Aug 2025</span>
             </div>
             <h4 className="mt-1 text-base text-muted-foreground">
-              Lead Developer & Technology Guild Guru
+              Senior Analyst & Technology Guild Guru
             </h4>
             <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
               <li>
-                Led development of a 17-microservice platform on Kubernetes, achieving 99.9%
-                system uptime
+                Owned the Kubernetes/Helm deployment layer of a 17-microservice platform running
+                at 99.9% uptime
               </li>
               <li>
                 Earned Technology Guild Guru certification — the highest level of blockchain

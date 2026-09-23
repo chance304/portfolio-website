@@ -57,7 +57,6 @@ const PROJECTS: Project[] = [
       'Developed an intelligent document automation platform using retrieval-augmented generation and enterprise templates, powered by chat-based interfaces.',
     tech: ['Python', 'LangChain', 'RAG', 'Vector Databases', 'NLP'],
     achievements: [
-      '90% efficiency improvement in document processing',
       'Enterprise-grade template automation',
       'Real-time chat-based document generation',
     ],

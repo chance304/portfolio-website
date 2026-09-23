@@ -80,7 +80,7 @@ export function Contact() {
               </div>
               <div className="flex items-center gap-3">
                 <Wrench className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
-                <span>Builder & Founder, NS Engineering</span>
+                <span>CTO / IT Director, NS Engineering</span>
               </div>
             </div>
           </Reveal>
