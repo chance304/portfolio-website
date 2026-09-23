@@ -91,3 +91,20 @@ test.describe('crawl surface', () => {
     await expect(page.getByRole('heading', { level: 1 })).toContainText("doesn't exist")
   })
 })
+
+test('résumé PDF is published and linked from the résumé page', async ({ page, request }) => {
+  const res = await request.get('/shobhit-tripathi-resume.pdf')
+  expect(res.status()).toBe(200)
+  expect(res.headers()['content-type']).toContain('application/pdf')
+  expect((await res.body()).length).toBeGreaterThan(20_000)
+  await page.goto('/resume/')
+  await expect(page.getByRole('link', { name: /download pdf/i })).toHaveAttribute('href', '/shobhit-tripathi-resume.pdf')
+})
+
+test('public pages never expose a phone number or personal email', async ({ page }) => {
+  for (const r of routes) {
+    await page.goto(r.path)
+    const html = await page.content()
+    expect(html, r.path).not.toMatch(/\+977|9843500060|chancer\.304@/)
+  }
+})

@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { useTheme } from '@/lib/theme'
 
+// '#…' = homepage sections; '/…' = pages.
 const NAV_LINKS = [
-  { href: '#home', label: 'Home' },
   { href: '#about', label: 'About' },
-  { href: '#skills', label: 'Skills' },
   { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
+  { href: '/work/', label: 'Work' },
+  { href: '/research/', label: 'Research' },
+  { href: '/resume/', label: 'Résumé' },
   { href: '#contact', label: 'Contact' },
 ]
 
@@ -29,7 +30,7 @@ export function Header() {
   const pathname = usePathname()
   const onHome = pathname === '/'
   // Section links scroll in place on the homepage and navigate to it elsewhere.
-  const linkHref = (hash: string) => (onHome ? hash : `/${hash}`)
+  const linkHref = (href: string) => (href.startsWith('/') || onHome ? href : `/${href}`)
   const [scrolled, setScrolled] = useState(false)
   const [sheetOpen, setSheetOpen] = useState(false)
 
@@ -41,7 +42,7 @@ export function Header() {
 
   const handleNavClick = (href: string) => (e: React.MouseEvent) => {
     setSheetOpen(false)
-    if (!onHome) return
+    if (!onHome || !href.startsWith('#')) return
     e.preventDefault()
     scrollToSection(href)
   }
@@ -67,6 +68,7 @@ export function Header() {
               <a
                 href={linkHref(link.href)}
                 onClick={handleNavClick(link.href)}
+                aria-current={pathname === link.href ? 'page' : undefined}
                 className="transition-colors hover:text-foreground"
               >
                 {link.label}

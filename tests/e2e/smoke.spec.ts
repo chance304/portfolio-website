@@ -20,8 +20,8 @@ test('theme toggle switches and persists across reloads', async ({ page, isMobil
 test('header section links navigate back to the homepage from other routes', async ({ page, isMobile }) => {
   test.skip(isMobile, 'desktop navigation only; mobile uses the sheet menu')
   await page.goto('/quantum-foundry/')
-  await page.getByRole('navigation').getByRole('link', { name: 'Projects' }).click()
-  await expect(page).toHaveURL(/\/#projects$/)
+  await page.getByRole('navigation').getByRole('link', { name: 'About' }).click()
+  await expect(page).toHaveURL(/\/#about$/)
 })
 
 test('every internal link resolves', async ({ page, request }) => {

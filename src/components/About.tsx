@@ -1,10 +1,10 @@
 import { Reveal } from '@/components/Reveal'
 
 const STATS = [
-  { value: '7+', label: 'Years in Enterprise Software' },
-  { value: '1', label: 'Company Built From the Ground Up' },
-  { value: '3+', label: 'Production Platforms Architected & Run' },
-  { value: 'Guild Guru', label: "Deloitte's Highest Blockchain Certification" },
+  { value: '11+', label: 'Years in Engineering' },
+  { value: '7+', label: 'Years at Deloitte' },
+  { value: '1', label: "Company's Full Stack, Built Solo" },
+  { value: 'Guild Guru', label: "Deloitte's Highest Blockchain Recognition" },
 ]
 
 export function About() {
@@ -19,16 +19,16 @@ export function About() {
           <p>
             I'm a builder first — someone who takes a system from a blank repository to
             something real people depend on, across every layer: infrastructure, backend,
-            frontend, and the AI tooling increasingly wrapped around all of it. I'm currently
-            founder and operator of a geotechnical engineering company based in Kathmandu,
-            Nepal, where I designed and built the entire technical stack myself — identity and
+            frontend, and the AI tooling increasingly wrapped around all of it. Today I'm CTO / IT
+            Director at NS Engineering, a geotechnical services company in Kathmandu, Nepal, where
+            I designed and run the entire technology stack as its sole engineer: identity and
             infrastructure, internal platforms, and a custom enterprise application running the
             company's core operations.
           </p>
           <p>
             Before that, I spent 7+ years at Deloitte, where I earned the{' '}
-            <strong className="text-foreground">Technology Guild Guru</strong> certification —
-            the highest level of blockchain expertise in the firm — while working across
+            <strong className="text-foreground">Technology Guild Guru</strong> — the firm's
+            highest internal recognition for blockchain expertise — while working across
             enterprise-grade platforms, AI/ML systems, and blockchain architecture.
           </p>
           <p>
