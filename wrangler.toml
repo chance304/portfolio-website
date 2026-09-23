@@ -5,11 +5,12 @@ pages_build_output_dir = "out"
 compatibility_date = "2026-06-01"
 
 # Per-IP rate limiting for the contact endpoint (functions/api/contact.ts).
-# Create the namespace once (`npx wrangler kv namespace create CONTACT_RATE_LIMIT`)
-# and paste its id here. Without the binding the endpoint still works, unlimited.
-[[kv_namespaces]]
-binding = "CONTACT_RATE_LIMIT"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+# Kept commented until the namespace exists, so a deploy never fails on a
+# placeholder id. To enable: `npx wrangler kv namespace create CONTACT_RATE_LIMIT`,
+# paste the id below and uncomment. Without the binding the endpoint works, unlimited.
+# [[kv_namespaces]]
+# binding = "CONTACT_RATE_LIMIT"
+# id = "<namespace id>"
 
 # Secrets are NOT stored here. Set them in the Pages project settings:
 #   RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL

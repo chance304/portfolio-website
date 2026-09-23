@@ -27,7 +27,7 @@ finds them, but this list is the rollback reference.
 
 ## 2. Contact endpoint (owner, 15 min)
 
-1. **KV for rate limiting:** `npx wrangler kv namespace create CONTACT_RATE_LIMIT`, paste the id into `wrangler.toml`, commit. (Or bind a namespace named `CONTACT_RATE_LIMIT` in *Pages → Settings → Bindings*.)
+1. **KV for rate limiting:** `npx wrangler kv namespace create CONTACT_RATE_LIMIT`, paste the id into `wrangler.toml` and **uncomment** the `[[kv_namespaces]]` block, then commit. (Or bind a namespace named `CONTACT_RATE_LIMIT` in *Pages → Settings → Bindings*.)
 2. **Resend:** create an account, add and verify the domain `shobhittripathi.com` (it gives SPF/DKIM records; add them in Cloudflare DNS after step 4, or at the current provider before).
 3. **Secrets** in *Pages → Settings → Variables and Secrets* (Production and Preview):
    - `RESEND_API_KEY`: from Resend
