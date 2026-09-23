@@ -21,7 +21,7 @@ finds them, but this list is the rollback reference.
 ## 1. Create the Pages project (owner, 10 min)
 
 1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git** → `chance304/portfolio-website`.
-2. Production branch: **`main`** (it gets the new site when `website-revamp` merges; see step 6).
+2. Production branch: **`website-revamp`**. Not `main`: GitHub Pages still serves the old site from `main`'s root, and `main` must stay untouched until after cutover, so it remains the rollback.
 3. Build command: `npm run build` · Output directory: `out` · Environment variable `NODE_VERSION=22`.
 4. Every PR now gets a preview URL (`<hash>.portfolio-website.pages.dev`).
 
@@ -56,11 +56,14 @@ profiles (GitHub profile README) with the alias.
 
 ## 6. Cutover
 
-1. Merge `website-revamp` → `main` via PR (all CI checks green). Pages builds `main`.
-2. Check the production `*.pages.dev` URL: `BASE_URL=https://portfolio-website.pages.dev npm run smoke`.
-3. **(owner)** Pages → **Custom domains** → add `shobhittripathi.com` and `www.shobhittripathi.com`. Cloudflare replaces the GitHub Pages A records with the Pages record.
-4. After DNS updates: `BASE_URL=https://shobhittripathi.com npm run smoke`.
-5. Make the CI checks required on `main` (Settings → Branches).
+The old site keeps serving from GitHub Pages (`main`) until the domain moves.
+**Don't merge into `main` before step 6.4**: GitHub Pages would start serving the
+Next.js source instead of the old site.
+
+1. Check the Pages production URL (built from `website-revamp`): `BASE_URL=https://portfolio-website.pages.dev npm run smoke`.
+2. **(owner)** Pages → **Custom domains** → add `shobhittripathi.com` and `www.shobhittripathi.com`. Cloudflare replaces the GitHub Pages A records with the Pages record.
+3. After DNS updates: `BASE_URL=https://shobhittripathi.com npm run smoke`.
+4. After 48 h stable: merge `website-revamp` → `main` via PR, switch the Pages production branch to `main`, and make the CI checks required on `main`.
 
 ## 7. Rollback (≤ 30 minutes)
 
@@ -68,12 +71,11 @@ If the smoke tests fail after cutover:
 
 1. Pages → Custom domains → **remove** `shobhittripathi.com`.
 2. Cloudflare DNS → re-add the four GitHub Pages A records (`185.199.108.153`, `.109.153`, `.110.153`, `.111.153`) and the `www` CNAME to `chance304.github.io`.
-3. GitHub Pages is still enabled (step 8 hasn't run), so the old site serves again once DNS updates.
-4. Revert the `website-revamp` → `main` merge commit if needed.
+3. GitHub Pages is still enabled and `main` still holds the old site (step 6.4 hasn't run), so the old site serves again once DNS updates.
 
-## 8. Teardown (after 48 h stable)
+## 8. Teardown (after step 6.4)
 
-Repo → Settings → Pages → disable GitHub Pages. Remove the `CNAME` file from `main`.
+Repo → Settings → Pages → disable GitHub Pages. The `CNAME` file from the old site is no longer needed.
 
 ## 9. Post-launch
 
