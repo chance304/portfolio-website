@@ -39,3 +39,10 @@ test('honeypot field is hidden from people and assistive tech', async ({ page })
   const box = await hp.boundingBox()
   expect(box === null || box.x < 0).toBe(true)
 })
+
+test('rate-limited state is announced', async ({ page }) => {
+  await page.route('**/api/contact**', (r) => r.fulfill({ status: 429, contentType: 'application/json', headers: { 'retry-after': '3600' }, body: '{"error":"Too many messages"}' }))
+  await fill(page, VALID)
+  await page.getByRole('button', { name: 'Send Message' }).click()
+  await expect(page.locator('#contact-status')).toHaveText(/try again in an hour/)
+})

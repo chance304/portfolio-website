@@ -1,0 +1,15 @@
+# Cloudflare Pages project config (ADR-003, #6). Pages reads this file from the
+# repo root when the project is connected to Git.
+name = "portfolio-website"
+pages_build_output_dir = "out"
+compatibility_date = "2026-06-01"
+
+# Per-IP rate limiting for the contact endpoint (functions/api/contact.ts).
+# Create the namespace once (`npx wrangler kv namespace create CONTACT_RATE_LIMIT`)
+# and paste its id here. Without the binding the endpoint still works, unlimited.
+[[kv_namespaces]]
+binding = "CONTACT_RATE_LIMIT"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Secrets are NOT stored here. Set them in the Pages project settings:
+#   RESEND_API_KEY, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL

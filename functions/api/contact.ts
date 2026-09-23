@@ -1,10 +1,13 @@
 import { Resend } from 'resend'
 import { validateContact } from '../../src/lib/contact/validate'
+import { checkRateLimit } from '../../src/lib/contact/rate-limit'
 
 interface Env {
   RESEND_API_KEY: string
   CONTACT_TO_EMAIL: string
   CONTACT_FROM_EMAIL: string
+  /** KV namespace for per-IP rate limiting (wrangler.toml). Optional: unbound = no limit. */
+  CONTACT_RATE_LIMIT?: KVNamespace
 }
 
 const MAX_BODY_BYTES = 20_000
@@ -19,7 +22,13 @@ function escapeHtml(value: string) {
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   // Same contract as the form and the local mock (src/lib/contact/validate.ts).
-  // Per-IP rate limiting is configured on the host (ADR-003, #6), not here.
+  if (env.CONTACT_RATE_LIMIT) {
+    const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
+    const rate = await checkRateLimit(env.CONTACT_RATE_LIMIT, ip)
+    if (!rate.allowed) {
+      return Response.json({ error: 'Too many messages' }, { status: 429, headers: { 'retry-after': String(rate.retryAfterSeconds) } })
+    }
+  }
   if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) {
     return Response.json({ error: 'Payload too large' }, { status: 413 })
   }

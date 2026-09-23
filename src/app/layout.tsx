@@ -7,6 +7,7 @@ import { ThemeProvider, themeInitScript } from '@/lib/theme'
 import { Toaster } from '@/components/ui/sonner'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { Analytics } from '@/components/Analytics'
 import { absoluteUrl, siteConfig } from '@/lib/seo/site-config'
 
 export const metadata: Metadata = {
@@ -52,6 +53,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
           <Toaster />
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )

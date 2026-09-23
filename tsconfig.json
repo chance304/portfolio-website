@@ -38,7 +38,7 @@
     "src/**/*.tsx",
     ".next/types/**/*.ts",
     "tests/**/*.ts",
-    "playwright.config.ts",
+    "playwright.config.ts", "playwright.smoke.config.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
