@@ -36,3 +36,4 @@ playwright-report/
 
 # Windows-path temp dirs Chrome/Lighthouse create under WSL
 C:*
+.wrangler/

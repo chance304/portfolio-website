@@ -11,7 +11,7 @@ import { Reveal } from '@/components/Reveal'
 import { LIMITS, validateContact, type ContactField } from '@/lib/contact/validate'
 
 type FormState = { name: string; email: string; subject: string; message: string; website: string }
-type Status = 'idle' | 'sending' | 'sent' | 'error'
+type Status = 'idle' | 'sending' | 'sent' | 'error' | 'limited'
 
 const INITIAL_STATE: FormState = { name: '', email: '', subject: '', message: '', website: '' }
 
@@ -20,6 +20,7 @@ const STATUS_TEXT: Record<Status, string> = {
   sending: 'Sending your message…',
   sent: "Message sent. I'll get back to you soon.",
   error: 'Something went wrong sending your message. Please try again.',
+  limited: "You've sent several messages recently. Please try again in an hour.",
 }
 
 export function Contact() {
@@ -51,6 +52,11 @@ export function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
+      if (res.status === 429) {
+        setStatus('limited')
+        toast.error(STATUS_TEXT.limited)
+        return
+      }
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { fields?: Partial<Record<ContactField, string>> }
         if (body.fields) setErrors(body.fields)
@@ -144,7 +150,7 @@ export function Contact() {
               <Button type="submit" className="w-full" disabled={status === 'sending'} aria-busy={status === 'sending'}>
                 {status === 'sending' ? 'Sending…' : 'Send Message'}
               </Button>
-              <p id="contact-status" role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-destructive' : 'text-muted-foreground'}`}>
+              <p id="contact-status" role="status" aria-live="polite" className={`text-sm ${status === 'error' || status === 'limited' ? 'text-destructive' : 'text-muted-foreground'}`}>
                 {STATUS_TEXT[status]}
               </p>
             </form>

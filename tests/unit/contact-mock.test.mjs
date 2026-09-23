@@ -17,3 +17,8 @@ test('mock: honeypot → 200 ok (silently dropped)', () => {
   const [status] = handle(JSON.stringify({ name: 'Bot Name', email: 'b@example.com', subject: 'Buy this now', message: 'spam spam spam', website: 'x' }))
   assert.equal(status, 200)
 })
+test('mock: rate limit matches production (5 per hour per client)', async () => {
+  const { limit } = await import('../../scripts/contact-mock.mjs')
+  for (let i = 0; i < 5; i++) assert.equal((await limit('10.0.0.9')).allowed, true)
+  assert.equal((await limit('10.0.0.9')).allowed, false)
+})
