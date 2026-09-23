@@ -45,21 +45,34 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (result.spam) return Response.json({ ok: true })
   const { name, email, subject, message } = result.value
 
+  // Fail clearly, never crash, if the host is missing configuration.
+  const missing = (['RESEND_API_KEY', 'CONTACT_FROM_EMAIL', 'CONTACT_TO_EMAIL'] as const).filter((k) => !env[k])
+  if (missing.length) {
+    console.error(`contact: missing configuration: ${missing.join(', ')}`)
+    return Response.json({ error: 'Contact form not configured' }, { status: 503 })
+  }
+
   const resend = new Resend(env.RESEND_API_KEY)
 
-  const { error } = await resend.emails.send({
-    from: env.CONTACT_FROM_EMAIL,
-    to: env.CONTACT_TO_EMAIL,
-    replyTo: email,
-    subject: `[Portfolio Contact] ${subject}`,
-    html: `
-      <p><strong>From:</strong> ${escapeHtml(name)} (${escapeHtml(email)})</p>
-      <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
-      <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
-    `,
-  })
+  let error: unknown = null
+  try {
+    ;({ error } = await resend.emails.send({
+      from: env.CONTACT_FROM_EMAIL,
+      to: env.CONTACT_TO_EMAIL,
+      replyTo: email,
+      subject: `[Portfolio Contact] ${subject}`,
+      html: `
+        <p><strong>From:</strong> ${escapeHtml(name)} (${escapeHtml(email)})</p>
+        <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+        <p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>
+      `,
+    }))
+  } catch (e) {
+    error = e
+  }
 
   if (error) {
+    console.error('contact: send failed', error)
     return Response.json({ error: 'Failed to send message' }, { status: 502 })
   }
 
