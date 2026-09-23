@@ -39,6 +39,7 @@ const PROJECTS: Project[] = [
       'Full CI/CD pipeline replacing manual operations',
       'Production observability stack',
     ],
+    link: { href: '/work/company-platform/', label: 'Read the case study' },
   },
   {
     title: 'Self-Hosted Collaboration Suite',
@@ -51,6 +52,7 @@ const PROJECTS: Project[] = [
       'Real-time multi-user document editing',
       'Full data sovereignty — zero third-party SaaS dependency',
     ],
+    link: { href: '/work/company-platform/', label: 'Read the case study' },
   },
   {
     title: 'Enterprise Lab & Operations Management System',
@@ -64,6 +66,7 @@ const PROJECTS: Project[] = [
       'Automated end-to-end test suite',
       'Full digitization of an ISO/IEC 17025 quality management system',
     ],
+    link: { href: '/work/company-platform/', label: 'Read the case study' },
   },
   {
     title: 'AI-Powered Document Generation System',

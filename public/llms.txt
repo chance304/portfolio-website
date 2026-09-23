@@ -4,8 +4,13 @@
 
 ## Pages
 
-- [Home](https://shobhittripathi.com/): profile, experience, projects and contact
+- [Home](https://shobhittripathi.com/): profile, proof pillars, experience, projects and contact
+- [Work](https://shobhittripathi.com/work/): case studies (problem, approach, what was hard, result, honest limits)
 - [Quantum Foundry](https://shobhittripathi.com/quantum-foundry/): open-source multi-physics simulator for post-silicon and 3D-stacked transistors; never reports a number a solver didn't produce
+- [A company's entire stack, built by one engineer](https://shobhittripathi.com/work/company-platform/)
+- [Seven years of enterprise delivery at Deloitte](https://shobhittripathi.com/work/enterprise-delivery/)
+- [Research](https://shobhittripathi.com/research/): interests, research software and how to cite it
+- [Résumé](https://shobhittripathi.com/resume/): also as a PDF at https://shobhittripathi.com/shobhit-tripathi-resume.pdf
 
 ## Elsewhere
 

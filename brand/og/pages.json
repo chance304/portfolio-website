@@ -8,5 +8,30 @@
     "kicker": "Open-source project",
     "title": "Quantum Foundry",
     "subtitle": "A multi-physics simulator for post-silicon and 3D-stacked transistors that never reports a number a solver didn't produce"
+  },
+  "work": {
+    "kicker": "Work",
+    "title": "Case studies",
+    "subtitle": "The problem, the approach, what was hard, the result and its honest limits"
+  },
+  "company-platform": {
+    "kicker": "Case study · Platform & infrastructure",
+    "title": "A company's entire stack, built by one engineer",
+    "subtitle": "Identity, networking, CI/CD, monitoring and a lab ERP, designed and run end to end"
+  },
+  "enterprise-delivery": {
+    "kicker": "Case study · Enterprise delivery",
+    "title": "Seven years of enterprise delivery at Deloitte",
+    "subtitle": "Firm-wide platforms, a 99.9%-uptime Kubernetes layer and a blockchain practice"
+  },
+  "research": {
+    "kicker": "Research",
+    "title": "Research",
+    "subtitle": "Honest scientific software, device simulation for post-silicon transistors, reliable distributed systems"
+  },
+  "resume": {
+    "kicker": "Résumé",
+    "title": "Shobhit Tripathi",
+    "subtitle": "Engineering leader · CTO / IT Director · Ex-Deloitte Technology Guild Guru"
   }
 }

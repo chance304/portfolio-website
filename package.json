@@ -12,7 +12,8 @@
     "test": "playwright test",
     "test:unit": "node --test \"tests/unit/*.test.*\"",
     "brand:assets": "python3 brand/render_assets.py",
-    "smoke": "playwright test -c playwright.smoke.config.ts"
+    "smoke": "playwright test -c playwright.smoke.config.ts",
+    "resume:pdf": "node scripts/resume-pdf.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",

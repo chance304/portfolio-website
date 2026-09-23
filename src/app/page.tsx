@@ -1,5 +1,6 @@
 import { Hero } from '@/components/Hero'
 import { About } from '@/components/About'
+import { Pillars } from '@/components/Pillars'
 import { Skills } from '@/components/Skills'
 import { Experience } from '@/components/Experience'
 import { Projects } from '@/components/Projects'
@@ -20,6 +21,7 @@ export default function HomePage() {
     <main>
       <JsonLd data={graph(personSchema(), websiteSchema(), profilePageSchema())} />
       <Hero />
+      <Pillars />
       <About />
       <Skills />
       <Experience />
