@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, type FormEvent } from 'react'
 import { toast } from 'sonner'
 import { MapPin, Globe, Wrench } from 'lucide-react'
@@ -6,53 +8,80 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Reveal } from '@/components/Reveal'
+import { LIMITS, validateContact, type ContactField } from '@/lib/contact/validate'
 
-type FormState = {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
+type FormState = { name: string; email: string; subject: string; message: string; website: string }
+type Status = 'idle' | 'sending' | 'sent' | 'error'
 
-const INITIAL_STATE: FormState = { name: '', email: '', subject: '', message: '' }
+const INITIAL_STATE: FormState = { name: '', email: '', subject: '', message: '', website: '' }
 
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+const STATUS_TEXT: Record<Status, string> = {
+  idle: '',
+  sending: 'Sending your message…',
+  sent: "Message sent. I'll get back to you soon.",
+  error: 'Something went wrong sending your message. Please try again.',
 }
 
 export function Contact() {
   const [form, setForm] = useState<FormState>(INITIAL_STATE)
-  const [submitting, setSubmitting] = useState(false)
+  const [status, setStatus] = useState<Status>('idle')
+  const [errors, setErrors] = useState<Partial<Record<ContactField, string>>>({})
 
   const handleChange =
     (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setForm((prev) => ({ ...prev, [field]: e.target.value }))
+      if (field !== 'website') setErrors((prev) => ({ ...prev, [field]: undefined }))
     }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    const result = validateContact(form)
+    if (!result.ok) {
+      setErrors(result.errors)
+      setStatus('idle')
+      const first = (['name', 'email', 'subject', 'message'] as const).find((f) => result.errors[f])
+      if (first) document.getElementById(first)?.focus()
+      return
+    }
 
-    if (form.name.trim().length < 2) return toast.error('Please enter your name.')
-    if (!isValidEmail(form.email)) return toast.error('Please enter a valid email address.')
-    if (form.subject.trim().length < 5) return toast.error('Subject is too short.')
-    if (form.message.trim().length < 10) return toast.error('Message is too short.')
-
-    setSubmitting(true)
+    setStatus('sending')
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      if (!res.ok) throw new Error('Request failed')
-      toast.success("Message sent — I'll get back to you soon.")
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { fields?: Partial<Record<ContactField, string>> }
+        if (body.fields) setErrors(body.fields)
+        throw new Error('Request failed')
+      }
+      setStatus('sent')
+      toast.success(STATUS_TEXT.sent)
       setForm(INITIAL_STATE)
     } catch {
-      toast.error('Something went wrong sending your message. Please try again.')
-    } finally {
-      setSubmitting(false)
+      setStatus('error')
+      toast.error(STATUS_TEXT.error)
     }
   }
+
+  const fieldProps = (field: ContactField) => ({
+    id: field,
+    name: field,
+    value: form[field],
+    onChange: handleChange(field),
+    'aria-invalid': errors[field] ? true : undefined,
+    'aria-describedby': errors[field] ? `${field}-error` : undefined,
+    maxLength: field === 'email' ? LIMITS.email.max : LIMITS[field].max,
+    required: true,
+  })
+
+  const fieldError = (field: ContactField) =>
+    errors[field] ? (
+      <p id={`${field}-error`} className="text-sm text-destructive">
+        {errors[field]}
+      </p>
+    ) : null
 
   return (
     <section id="contact" className="border-t border-border py-24">
@@ -86,38 +115,38 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={0.05}>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate aria-describedby="contact-status">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" value={form.name} onChange={handleChange('name')} required />
+                <Input {...fieldProps('name')} autoComplete="name" />
+                {fieldError('name')}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange('email')}
-                  required
-                />
+                <Input {...fieldProps('email')} type="email" autoComplete="email" />
+                {fieldError('email')}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="subject">Subject</Label>
-                <Input id="subject" value={form.subject} onChange={handleChange('subject')} required />
+                <Input {...fieldProps('subject')} />
+                {fieldError('subject')}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Message</Label>
-                <Textarea
-                  id="message"
-                  rows={5}
-                  value={form.message}
-                  onChange={handleChange('message')}
-                  required
-                />
+                <Textarea {...fieldProps('message')} rows={5} />
+                {fieldError('message')}
               </div>
-              <Button type="submit" className="w-full" disabled={submitting}>
-                {submitting ? 'Sending…' : 'Send Message'}
+              {/* Honeypot: invisible to people and screen readers; bots tend to fill it. */}
+              <div aria-hidden="true" className="absolute -left-[10000px] h-px w-px overflow-hidden">
+                <label htmlFor="website">Website</label>
+                <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={form.website} onChange={handleChange('website')} />
+              </div>
+              <Button type="submit" className="w-full" disabled={status === 'sending'} aria-busy={status === 'sending'}>
+                {status === 'sending' ? 'Sending…' : 'Send Message'}
               </Button>
+              <p id="contact-status" role="status" aria-live="polite" className={`text-sm ${status === 'error' ? 'text-destructive' : 'text-muted-foreground'}`}>
+                {STATUS_TEXT[status]}
+              </p>
             </form>
           </Reveal>
         </div>

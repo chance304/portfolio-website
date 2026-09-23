@@ -1,0 +1,91 @@
+/* Light-mode muted/ok/warn darkened 2026-09-23 to meet WCAG AA (≥4.5:1) on tinted backgrounds.
+   Quantum Foundry write-up styles, scoped under .qf (generated from the
+   original standalone page; the site header/footer replace its own). */
+.qf { --bg: oklch(1 0 0);
+    --fg: oklch(0.145 0 0);
+    --muted: oklch(0.52 0 0);
+    --subtle: oklch(0.97 0 0);
+    --border: oklch(0.922 0 0);
+    --card: oklch(1 0 0);
+    --accent: oklch(0.52 0.13 250);
+    --ok: oklch(0.47 0.12 155);
+    --warn: oklch(0.5 0.12 70);
+    --radius: 10px; }
+.dark .qf { --bg: oklch(0.145 0 0);
+    --fg: oklch(0.985 0 0);
+    --muted: oklch(0.708 0 0);
+    --subtle: oklch(0.205 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --card: oklch(0.205 0 0);
+    --accent: oklch(0.72 0.12 250);
+    --ok: oklch(0.72 0.14 155);
+    --warn: oklch(0.78 0.13 75); }
+.qf * { box-sizing: border-box; }
+.qf { margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.65 var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased; }
+.qf a { color: inherit; text-underline-offset: 3px; text-decoration-color: var(--muted); }
+.qf a:hover { text-decoration-color: var(--fg); }
+.qf code { font: 0.88em var(--font-geist-mono), ui-monospace, monospace; background: var(--subtle); padding: 0.1em 0.35em; border-radius: 5px; }
+.qf .wrap { max-width: 64rem; margin: 0 auto; padding: 0 16px; }
+@media (min-width: 640px) {
+  .qf .wrap { padding: 0 24px; }
+}
+.qf .hero { padding-top: 72px; padding-bottom: 40px; }
+.qf .eyebrow { font-size: 14px; font-weight: 500; color: var(--muted); letter-spacing: 0.01em; }
+.qf h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1.08; letter-spacing: -0.03em; font-weight: 600; margin: 10px 0 18px; }
+.qf .lede { font-size: 1.15rem; color: var(--muted); max-width: 42rem; margin: 0; }
+.qf .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.qf .btn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px;
+    border-radius: 9px; font-weight: 500; font-size: 15px; text-decoration: none;
+    border: 1px solid var(--border); }
+.qf .btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.qf .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.qf .pill { font-size: 13px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; }
+.qf section { border-top: 1px solid var(--border); padding: 56px 0; }
+.qf h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); letter-spacing: -0.02em; font-weight: 600; margin: 0 0 14px; }
+.qf h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 6px; }
+.qf p { margin: 0 0 14px; }
+.qf .muted { color: var(--muted); }
+.qf .prose { max-width: 44rem; }
+.qf .rule { border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius);
+    padding: 18px 20px; background: var(--subtle); max-width: 44rem; }
+.qf .rule strong { display: block; font-size: 1.05rem; margin-bottom: 4px; }
+.qf .grid { display: grid; gap: 16px; }
+@media (min-width: 720px) {
+  .qf .grid.two { grid-template-columns: 1fr 1fr; }
+  .qf .grid.three { grid-template-columns: 1fr 1fr 1fr; }
+}
+.qf .card { border: 1px solid var(--border); border-radius: var(--radius); background: var(--card); padding: 20px; }
+.qf .card p:last-child { margin-bottom: 0; }
+.qf .tag { display: inline-block; font-size: 12px; font-weight: 500; border-radius: 6px; padding: 1px 8px; margin-bottom: 10px; }
+.qf .tag.real { color: var(--ok); background: color-mix(in oklch, var(--ok) 14%, transparent); }
+.qf .tag.stub { color: var(--warn); background: color-mix(in oklch, var(--warn) 16%, transparent); }
+.qf .tag.plan { color: var(--muted); background: var(--subtle); }
+.qf figure { margin: 8px 0 0; }
+.qf .diagram { width: 100%; height: auto; display: block; }
+.qf .diagram text { font-family: var(--font-geist-sans), system-ui, sans-serif; fill: var(--fg); }
+.qf .diagram .sub { fill: var(--muted); font-size: 12px; }
+.qf .diagram .box { fill: var(--card); stroke: var(--border); stroke-width: 1.5; }
+.qf .diagram .box.hl { stroke: var(--accent); }
+.qf .diagram .arrow { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.qf .diagram .arrowhead { fill: var(--muted); }
+.qf figcaption { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.qf .diagram-mobile { display: block; }
+.qf .diagram-desktop { display: none; }
+@media (min-width: 720px) {
+  .qf .diagram-mobile { display: none; }
+  .qf .diagram-desktop { display: block; }
+}
+.qf table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.qf th, .qf td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.qf th { font-weight: 500; color: var(--muted); font-size: 13px; }
+.qf .table-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
+.qf .table-wrap tr:last-child td { border-bottom: 0; }
+.qf .num { font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.92em; }
+.qf .story { border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; background: var(--card); }
+.qf .story .what { font-size: 13px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.qf .big { font-size: 2.2rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin: 6px 0 10px; }
+.qf pre { font: 14px/1.6 var(--font-geist-mono), ui-monospace, monospace; background: var(--subtle); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; overflow-x: auto; margin: 0; }
+.qf .qf-foot { border-top: 1px solid var(--border); padding: 32px 0 48px; font-size: 14px; color: var(--muted); }
+.qf .qf-foot .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }

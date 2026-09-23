@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { validateContact } from '../../src/lib/contact/validate'
 
 interface Env {
   RESEND_API_KEY: string
@@ -6,16 +7,7 @@ interface Env {
   CONTACT_FROM_EMAIL: string
 }
 
-interface ContactPayload {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-}
+const MAX_BODY_BYTES = 20_000
 
 function escapeHtml(value: string) {
   return value
@@ -26,27 +18,23 @@ function escapeHtml(value: string) {
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  let payload: Partial<ContactPayload>
+  // Same contract as the form and the local mock (src/lib/contact/validate.ts).
+  // Per-IP rate limiting is configured on the host (ADR-003, #6), not here.
+  if (Number(request.headers.get('content-length') ?? 0) > MAX_BODY_BYTES) {
+    return Response.json({ error: 'Payload too large' }, { status: 413 })
+  }
+  let payload: unknown
   try {
     payload = await request.json()
   } catch {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
-
-  const { name, email, subject, message } = payload
-
-  if (!name || name.trim().length < 2) {
-    return Response.json({ error: 'Invalid name' }, { status: 400 })
+  const result = validateContact(payload)
+  if (!result.ok) {
+    return Response.json({ error: 'Validation failed', fields: result.errors }, { status: 400 })
   }
-  if (!email || !isValidEmail(email)) {
-    return Response.json({ error: 'Invalid email' }, { status: 400 })
-  }
-  if (!subject || subject.trim().length < 5) {
-    return Response.json({ error: 'Invalid subject' }, { status: 400 })
-  }
-  if (!message || message.trim().length < 10) {
-    return Response.json({ error: 'Invalid message' }, { status: 400 })
-  }
+  if (result.spam) return Response.json({ ok: true })
+  const { name, email, subject, message } = result.value
 
   const resend = new Resend(env.RESEND_API_KEY)
 
